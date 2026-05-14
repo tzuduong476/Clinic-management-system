@@ -86,7 +86,9 @@ $nav = function (string $page, string $href, string $icon, string $label) use ($
             Main
         </div>
 
-        <?php $nav('dashboard', 'index.php', 'dashboard', 'Dashboard'); ?>
+        <?php if (!$isDoctor): ?>
+            <?php $nav('dashboard', 'index.php', 'dashboard', 'Dashboard'); ?>
+        <?php endif; ?>
         <?php $nav('calendar', 'calendar.php', 'calendar_today', 'Calendar'); ?>
         <?php $nav('customers', 'customers.php', 'people', 'Customers'); ?>
         <?php $nav('treatments', 'service_management.php', 'medical_services', 'Services'); ?>
