@@ -115,6 +115,7 @@ if ($action === 'login') {
     $_SESSION['user_id'] = $user['Customer_ID'];
     $_SESSION['user_email'] = $user['Email'];
     $_SESSION['user_name'] = $user['Name'];
+    $_SESSION['user_phone'] = preg_replace('/\D/', '', (string)($user['Phone'] ?? ''));
     $_SESSION['user_role'] = 'patient';
 
     $response['success'] = true;
@@ -148,7 +149,16 @@ elseif ($action === 'register') {
     }
 
     if ($password !== $confirm_password) {
-        $response['message'] = 'Passwords do not match.';
+        $response['message'] = 'Mật khẩu không khớp.';
+        echo json_encode($response);
+        exit;
+    }
+
+    // Validate phone format - normalize first (remove spaces, special chars)
+    $phone = preg_replace('/[\s\-\.\(\)]+/', '', trim($phone));
+
+    if (!preg_match('/^0\d{9}$/', $phone)) {
+        $response['message'] = 'Số điện thoại không đúng định dạng. Phải bắt đầu bằng 0 và có đúng 10 chữ số (VD: 0912345678).';
         echo json_encode($response);
         exit;
     }
