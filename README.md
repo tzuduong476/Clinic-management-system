@@ -28,11 +28,12 @@ This repository hosts a clinic marketing site plus PHP-powered authentication pa
 
 ## 🗄️ Database & Authentication
 
-- `backend/database.sql`: Creates the `clinic.users` table with `id`, `full_name`, `email`, `phone`, `password`, `role`, and timestamp columns.  
-- `backend/db.php`: Central PDO connection, session bootstrapping, and helper functions (`getCurrentUser`, `isLoggedIn`, `redirect`).  
-- `backend/register.php`: Validates the signup form, hashes passwords with `password_hash`, stores accounts in `Customer`, and returns JSON responses (`success`, `message`).  
-- `backend/login.php`: Validates credentials against `Customer`, sets `$_SESSION` values (`user_id`, `user_email`, `user_name`, `user_role`), and responds with JSON that also includes a `redirect` URL.  
-- `backend/logout.php`: Clears the session and redirects the visitor back to `frontend/signin.php`.
+- `backend/database.sql`: Creates the `clinic` database and all required tables.  
+- `backend/db.php`: Central PDO connection, session bootstrapping, and automatic table creation.  
+- `backend/auth.php`: Consolidated API for login and registration.  
+- `backend/logout.php`: Clears the session and redirects to signin.
+
+For detailed setup instructions in Vietnamese, please see [HUONG_DAN_CAI_DAT.md](file:///Applications/XAMPP/xamppfiles/htdocs/clinic_management_system_g4-main-2/HUONG_DAN_CAI_DAT.md).
 
 The registration and login APIs return JSON payloads so that the `frontend/signup.php` and `frontend/signin.php` pages can show user-friendly feedback and automatically redirect on success. Each successful registration inserts a row into the `Customer` table (verify via phpMyAdmin or `SELECT * FROM clinic.Customer`).
 
@@ -56,16 +57,15 @@ The registration and login APIs return JSON payloads so that the `frontend/signu
 clinic_management_system_g4-main-2/
 ├── backend/        # PDO helper + auth APIs + SQL schema
 │   ├── db.php
-│   ├── register.php
-│   ├── login.php
+│   ├── auth.php
 │   ├── logout.php
 │   └── database.sql
 ├── frontend/        # Tailwind-driven PHP marketing + auth pages
+│   ├── assets/      # Shared static images (logo, hero)
 │   ├── home.php
 │   ├── dichvu.php
 │   ├── service-detail.php
 │   ├── signup.php
 │   └── signin.php
-├── assets/          # Shared static images (logo, hero) 
 └── README.md
 ```
